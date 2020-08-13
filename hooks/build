@@ -5,7 +5,7 @@
 
 if [ -z "${IMAGE_NAME}" ]; then
   DOCKER_TAG="latest"
-  IMAGE_NAME="chrisob/qpid-broker-j-docker:${DOCKER_TAG}"
+  IMAGE_NAME="dancchen/qpid-broker-j-docker:${DOCKER_TAG}"
 fi
 
 if [ "${DOCKER_TAG}" != "latest" ]; then
