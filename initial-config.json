@@ -1,6 +1,7 @@
+
 {
   "name": "${broker.name}",
-  "modelVersion": "7.1",
+  "modelVersion": "8.0",
   "authenticationproviders" : [ {
     "name" : "plain",
     "type" : "Plain",
@@ -9,10 +10,38 @@
       "type" : "managed",
       "password" : "guest"
     } ]
-  } ],
+  },{
+    "name" : "anonymous",
+    "type" : "Anonymous"
+  }],
     "brokerloggers" : [ {
-    "name" : "console",
-    "type" : "Console",
+      "name" : "console",
+      "type" : "Console",
+      "brokerloginclusionrules" : [ {
+        "name" : "Root",
+        "type" : "NameAndLevel",
+        "level" : "WARN",
+        "loggerName" : "ROOT"
+      }, {
+        "name" : "Qpid",
+        "type" : "NameAndLevel",
+        "level" : "INFO",
+        "loggerName" : "org.apache.qpid.*"
+      }, {
+        "name" : "Operational",
+        "type" : "NameAndLevel",
+        "level" : "INFO",
+        "loggerName" : "qpid.message.*"
+      }, {
+        "name" : "Statistics",
+        "type" : "NameAndLevel",
+        "level" : "INFO",
+        "loggerName" : "qpid.statistics.*"
+      } ]
+    }, {
+    "name" : "logfile",
+    "type" : "File",
+    "fileName" : "${qpid.work_dir}${file.separator}log${file.separator}qpid.log",
     "brokerloginclusionrules" : [ {
       "name" : "Root",
       "type" : "NameAndLevel",
@@ -62,7 +91,7 @@
   "ports" : [  {
     "name" : "AMQP",
     "port" : "${qpid.amqp_port}",
-    "authenticationProvider" : "plain",
+    "authenticationProvider" : "anonymous",
     "virtualhostaliases" : [ {
        "name" : "nameAlias",
        "type" : "nameAlias"
@@ -76,7 +105,7 @@
   }, {
     "name" : "HTTP",
     "port" : "${qpid.http_port}",
-    "authenticationProvider" : "plain",
+    "authenticationProvider" : "anonymous",
     "protocols" : [ "HTTP" ]
   }],
   "virtualhostnodes" : [ {
@@ -90,3 +119,4 @@
     "name" : "httpManagement"
   } ]
 }
+
